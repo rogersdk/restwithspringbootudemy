@@ -3,12 +3,12 @@ package br.com.erudio.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.BAD_REQUEST)
-public class UnsuportedMathOperationException extends RuntimeException {
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class ResourceNotFoundException extends RuntimeException {
 
 	private static final long serialVersionUID = 143404231206736818L;
 
-	public UnsuportedMathOperationException(String message) {
+	public ResourceNotFoundException(String message) {
 		super(message);
 	}
 }

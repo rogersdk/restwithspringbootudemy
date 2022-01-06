@@ -1,70 +1,53 @@
 package br.com.erudio.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.erudio.exception.ResourceNotFoundException;
 import br.com.erudio.model.Person;
+import br.com.erudio.repository.PersonRepository;
 import br.com.erudio.service.PersonService;
 
 @Service
 public class PersonServiceImpl implements PersonService {
 
-	private final AtomicLong counter = new AtomicLong();
+	@Autowired
+	private PersonRepository repository;
 
 	@Override
 	public List<Person> findAll() {
-		List<Person> list = new ArrayList<>();
-
-		for (int i = 0; i < 10; i++) {
-			Person person = mockPerson(i);
-			list.add(person);
-		}
-
-		return list;
+		return repository.findAll();
 	}
 
 	@Override
-	public Person findById(String id) {
-		Person person = new Person();
-
-		person.setId(counter.incrementAndGet());
-		person.setFirstName("FirstName");
-		person.setLastName("LastName");
-		person.setGender("male");
-		person.setAddress("Rua sem nome");
-
-		return person;
+	public Person findById(Long id) {
+		return repository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("No records found for this ID."));
 	}
 
 	@Override
 	public Person create(Person person) {
 
-		return person;
+		return repository.save(person);
 	}
 
 	@Override
 	public Person update(Person person) {
+		Person entity = findById(person.getId());
 
-		return person;
+		entity.setFirstName(person.getFirstName());
+		entity.setLastName(person.getLastName());
+		entity.setAddress(person.getAddress());
+		entity.setGender(person.getGender());
+
+		return repository.save(entity);
 	}
 
 	@Override
-	public void delete(String id) {
-
-	}
-
-	private Person mockPerson(int i) {
-		Person person = new Person();
-
-		person.setId(counter.incrementAndGet());
-		person.setFirstName("FirstName " + i);
-		person.setLastName("LastName");
-		person.setGender("male");
-		person.setAddress("Rua sem nome");
-		return person;
+	public void delete(Long id) {
+		repository.delete(findById(id));
 	}
 
 }
