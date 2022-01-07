@@ -2,16 +2,17 @@ package br.com.erudio.service;
 
 import java.util.List;
 
-import br.com.erudio.model.Person;
+import br.com.erudio.data.model.Person;
+import br.com.erudio.data.vo.PersonVO;
 
 public interface PersonService {
-	List<Person> findAll();
+	List<PersonVO> findAll();
 
-	Person findById(Long id);
+	PersonVO findById(Long id);
 
-	Person create(Person person);
+	PersonVO save(PersonVO person);
 
-	Person update(Person person);
+	PersonVO update(PersonVO person);
 
 	void delete(Long id);
 }
