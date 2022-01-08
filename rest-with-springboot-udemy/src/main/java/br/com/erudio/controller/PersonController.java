@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.erudio.data.vo.PersonVO;
+import br.com.erudio.data.vo.v1.PersonVO;
 import br.com.erudio.service.PersonService;
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/api/v1/person")
 public class PersonController {
 
 	@Autowired
