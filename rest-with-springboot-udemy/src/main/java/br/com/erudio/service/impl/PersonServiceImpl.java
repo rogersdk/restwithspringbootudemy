@@ -40,7 +40,7 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	public PersonVO update(PersonVO person) {
-		Person entity = repository.findById(person.getId())
+		Person entity = repository.findById(person.getKey())
 				.orElseThrow(() -> new ResourceNotFoundException("No records found for this ID."));
 
 		entity.setFirstName(person.getFirstName());

@@ -1,5 +1,8 @@
 package br.com.erudio.controller;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,25 +27,40 @@ public class PersonController {
 	private PersonService service;
 
 	@GetMapping(value = "/", produces = { "application/json", "application/xml", "application/x-yaml" })
-	public List<PersonVO> findAll() throws Exception {
-		return service.findAll();
+	public List<PersonVO> findAll() {
+		List<PersonVO> persons = service.findAll();
+		persons.stream().forEach(p -> {
+			try {
+				p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		return persons;
 	}
 
 	@GetMapping(value = "/{id}", produces = { "application/json", "application/xml", "application/x-yaml" })
-	public PersonVO findById(@PathVariable("id") Long id) throws Exception {
-		return service.findById(id);
+	public PersonVO findById(@PathVariable("id") Long id) {
+		PersonVO vo = service.findById(id);
+		vo.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+		return vo;
 	}
 
-	@PostMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = { "application/json",
-			"application/xml", "application/x-yaml" })
-	public PersonVO create(@RequestBody PersonVO person) throws Exception {
-		return service.save(person);
+	@PostMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = {
+			"application/json", "application/xml", "application/x-yaml" })
+	public PersonVO create(@RequestBody PersonVO person) {
+		PersonVO vo = service.save(person);
+		vo.add(linkTo(methodOn(PersonController.class).findById(person.getKey())).withSelfRel());
+		return vo;
 	}
 
-	@PutMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = { "application/json",
-			"application/xml", "application/x-yaml" })
-	public PersonVO update(@RequestBody PersonVO person) throws Exception {
-		return service.update(person);
+	@PutMapping(produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = {
+			"application/json", "application/xml", "application/x-yaml" })
+	public PersonVO update(@RequestBody PersonVO person) {
+		PersonVO vo = service.update(person);
+		vo.add(linkTo(methodOn(PersonController.class).findById(person.getKey())).withSelfRel());
+		return vo;
 	}
 
 	@DeleteMapping(value = "/{id}")
