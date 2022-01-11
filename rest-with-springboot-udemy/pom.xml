@@ -52,7 +52,25 @@
 			<artifactId>dozer-core</artifactId>
 			<version>6.4.1</version>
 		</dependency>
-
+		
+		<!-- for xml support -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+		</dependency>
+		
+		<!-- for yaml support -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-yaml</artifactId>
+		</dependency>
+		
+		<!-- support for LocalDate jsr310 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -92,7 +110,7 @@
 							</exclusion>
 						</exclusions>
 					</dependency>
-					
+
 				</dependencies>
 			</plugin>
 		</plugins>
