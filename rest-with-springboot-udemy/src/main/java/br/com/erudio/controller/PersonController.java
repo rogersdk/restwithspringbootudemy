@@ -21,6 +21,7 @@ import br.com.erudio.service.PersonService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+//@CrossOrigin //habilita a chamada de servico de dominios distintos para todo o endpoint
 @Api(value = "Person Endpoint", description = "Description for Person", tags = { "PersonEndpoint" })
 @RestController
 @RequestMapping("/api/v1/person")
@@ -29,6 +30,7 @@ public class PersonController {
 	@Autowired
 	private PersonService service;
 
+	//@CrossOrigin(origins="http://localhost:8080") //habilita a chamada de servico de dominios apenas para o localhost
 	@ApiOperation(value = "Find All person recorded")
 	@GetMapping(value = "/", produces = { "application/json", "application/xml", "application/x-yaml" })
 	public List<PersonVO> findAll() {
@@ -44,6 +46,7 @@ public class PersonController {
 		return persons;
 	}
 
+//	@CrossOrigin(origins={"http://localhost:8080", "outrodominiopermitido.com.br"}) //
 	@ApiOperation(value = "Find person by id")
 	@GetMapping(value = "/{id}", produces = { "application/json", "application/xml", "application/x-yaml" })
 	public PersonVO findById(@PathVariable("id") Long id) {
