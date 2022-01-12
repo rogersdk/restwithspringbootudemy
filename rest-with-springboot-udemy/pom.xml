@@ -76,6 +76,20 @@
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-jsr310</artifactId>
 		</dependency>
+		
+		<!-- for swagger endpoints support -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+		
+		<!-- for swagger ui support -->		
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.9.2</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -100,7 +114,7 @@
 				<artifactId>flyway-maven-plugin</artifactId>
 				<version>5.2.4</version>
 				<configuration>
-					<url>jdbc:mysql://localhost:33060/rest_with_springboot_udemy?useTimezone=true&amp;serverTimezone=UTC-3&amp;useSSl=false</url>
+					<url>jdbc:mysql://localhost:33060/rest_with_springboot_udemy?useTimezone=true&amp;serverTimezone=UTC&amp;useSSl=false&amp;enabledTLSProtocols=TLSv1.2</url>
 					<user>root</user>
 					<password>root</password>
 				</configuration>
