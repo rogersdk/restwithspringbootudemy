@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
 
-@JsonPropertyOrder({ "id", "firstName", "lastName", "address", "gender" })
+@JsonPropertyOrder({ "id", "firstName", "lastName", "address", "gender", "enabled" })
 public class PersonVO extends ResourceSupport implements Serializable {
 
 	private static final long serialVersionUID = -276717165117137620L;
@@ -24,6 +24,8 @@ public class PersonVO extends ResourceSupport implements Serializable {
 	private String address;
 
 	private String gender;
+
+	private Boolean enabled;
 
 	public PersonVO() {
 	}
@@ -68,11 +70,20 @@ public class PersonVO extends ResourceSupport implements Serializable {
 		this.gender = gender;
 	}
 
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = super.hashCode();
 		result = prime * result + ((address == null) ? 0 : address.hashCode());
+		result = prime * result + ((enabled == null) ? 0 : enabled.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
 		result = prime * result + ((key == null) ? 0 : key.hashCode());
@@ -84,7 +95,7 @@ public class PersonVO extends ResourceSupport implements Serializable {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
@@ -93,6 +104,11 @@ public class PersonVO extends ResourceSupport implements Serializable {
 			if (other.address != null)
 				return false;
 		} else if (!address.equals(other.address))
+			return false;
+		if (enabled == null) {
+			if (other.enabled != null)
+				return false;
+		} else if (!enabled.equals(other.enabled))
 			return false;
 		if (firstName == null) {
 			if (other.firstName != null)

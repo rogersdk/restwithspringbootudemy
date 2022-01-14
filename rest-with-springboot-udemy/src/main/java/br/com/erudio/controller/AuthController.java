@@ -21,8 +21,10 @@ import br.com.erudio.data.model.User;
 import br.com.erudio.repository.UserRepository;
 import br.com.erudio.security.AccountCredentialsVO;
 import br.com.erudio.security.jwt.JwtTokenProvider;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+@Api(tags = "AuthenticationEndpoint")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -36,7 +38,8 @@ public class AuthController {
 	@Autowired
 	private UserRepository userRepository;
 
-	@ApiOperation(value = "Authenticate user")
+	@ApiOperation(value = "Authenticate an user and return its token")
+	@SuppressWarnings("rawtypes")
 	@PostMapping(value="/signin", produces = { "application/json", "application/xml", "application/x-yaml" }, consumes = {
 			"application/json", "application/xml", "application/x-yaml" })
 	public ResponseEntity signin(@RequestBody AccountCredentialsVO requestVO) {

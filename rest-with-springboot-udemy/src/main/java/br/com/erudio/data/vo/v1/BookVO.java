@@ -7,8 +7,10 @@ import java.time.LocalDate;
 import org.springframework.hateoas.ResourceSupport;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
 
+@JsonPropertyOrder({ "id", "author", "title", "launchDate", "price" })
 public class BookVO extends ResourceSupport implements Serializable {
 
 	private static final long serialVersionUID = -7548976478221436686L;

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -30,7 +31,8 @@ public class PersonController {
 	@Autowired
 	private PersonService service;
 
-	//@CrossOrigin(origins="http://localhost:8080") //habilita a chamada de servico de dominios apenas para o localhost
+	// @CrossOrigin(origins="http://localhost:8080") //habilita a chamada de servico
+	// de dominios apenas para o localhost
 	@ApiOperation(value = "Find All person recorded")
 	@GetMapping(value = "/", produces = { "application/json", "application/xml", "application/x-yaml" })
 	public List<PersonVO> findAll() {
@@ -78,6 +80,14 @@ public class PersonController {
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) throws Exception {
 		service.delete(id);
 		return ResponseEntity.ok().build();
+	}
+
+	@ApiOperation(value = "Disables a person by id")
+	@PatchMapping(value = "/{id}")
+	public PersonVO disablePerson(@PathVariable("id") Long id) throws Exception {
+		PersonVO vo = service.disablePerson(id);
+		vo.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+		return vo;
 	}
 
 }
