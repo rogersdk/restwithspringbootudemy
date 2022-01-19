@@ -1,46 +1,23 @@
-# Java Gradle CircleCI 2.0 configuration file
-# See: https://circleci.com/docs/2.0/language-java/
 version: 2
-
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
   build:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
-      # specify the version you desire here
-      - image: circleci/openjdk:8-jdk
+      - run:
+          name: Start container and verify it's working
+          command: |
+            set -x
+            docker-compose up -d
 
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
+            # docker-compose will start 2 containers, the one with service will be named `contacts`
+            # we start another container with curl in the same network as `contacts`, this way we have
+            # all exposed ports from `contacts` available on `localhost` in this new container
+            docker run --network container:contacts \
+              appropriate/curl --retry 10 --retry-delay 1 --retry-connrefused http://localhost:8080/contacts/test
 
-    working_directory: ~/repo
-
-    environment:
-      # Customize the JVM maximum heap limit
-      JVM_OPTS: -Xmx3200m
-      TERM: dumb
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
-    steps:
-      - checkout
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "build.gradle" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-
-      - run: gradle dependencies
-
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: v1-dependencies-{{ checksum "build.gradle" }}
-
-      # run tests!
-      - run: gradle test
+#      - deploy:
+#          name: Build and push Docker image
+#          command: |
+#            TAG="0.1.${CIRCLE_BUILD_NUM}"
+#            docker build -t circleci/cci-demo-docker:$TAG .
+#            docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
+#            docker push circleci/cci-demo-docker:$TAG
