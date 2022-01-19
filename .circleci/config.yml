@@ -1,6 +1,8 @@
 version: 2
 jobs:
   build:
+    machine:
+        docker_layer_caching: true    # default - false
     steps:
         - checkout
     docker:
@@ -24,4 +26,5 @@ jobs:
 #            docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
 #            docker push circleci/cci-demo-docker:$TAG
 
-    
+    machine:
+      docker_layer_caching: true    # default - false
