@@ -1,6 +1,8 @@
 version: 2
 jobs:
   build:
+    steps:
+        - checkout
     docker:
       - run:
           name: Start container and verify it's working
@@ -21,3 +23,5 @@ jobs:
 #            docker build -t circleci/cci-demo-docker:$TAG .
 #            docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
 #            docker push circleci/cci-demo-docker:$TAG
+
+    
