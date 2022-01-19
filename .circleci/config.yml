@@ -5,7 +5,6 @@ jobs:
       docker_layer_caching: true    # default - false
     steps:
       - checkout
-      - setup_remote_docker
       - run:
           name: Start container and verify it's working
           command: |
