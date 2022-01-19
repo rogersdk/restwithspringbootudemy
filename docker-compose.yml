@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.2'
 services:
   db:
     image: rogersdk/mysql-rest-with-spring-boot-udemy
