@@ -1,7 +1,7 @@
 version: '3.2'
 services:
   db:
-    image: rogersdk/mysql-rest-with-spring-boot-udemy
+    #image: rogersdk/mysql-rest-with-spring-boot-udemy
     command: mysqld --default-authentication-plugin=mysql_native_password
     restart: always
     build:
@@ -18,7 +18,7 @@ services:
     networks:
       - udemy-network
   rest-with-springboot-udemy:
-    image: rogersdk/rest-with-spring-boot-udemy
+    #image: rogersdk/rest-with-spring-boot-udemy
     restart: always
     build: ./rest-with-springboot-udemy
     working_dir: /rest-with-springboot-udemy
