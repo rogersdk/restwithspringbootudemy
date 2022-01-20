@@ -27,7 +27,6 @@ services:
       SPRING_BOOT_ENVIRONMENT: Production
     volumes:
       - ./rest-with-springboot-udemy:/rest-with-springboot-udemy
-      - ~/.m2/root/.m2
     ports:
       - "8080:8080"
     command: mvn spring-boot:run
